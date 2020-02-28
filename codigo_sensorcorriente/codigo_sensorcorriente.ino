@@ -5,7 +5,7 @@
 #include <ThingsBoard.h>
 #define WIFI_AP "IER"
 #define WIFI_PASSWORD "acadier2014"
-#define TOKEN "1HVYQrDTzDzwmKFuLDRu"
+#define TOKEN "asm8CrU6nQfGsW3Xl7Fn"
 char thingsboardServer[] = "iot.ier.unam.mx";
 // Initialize the Ethernet client object
 WiFiEspClient espClient;
@@ -25,7 +25,7 @@ float voltajeSensor;
 float corriente = 0;
 float Sumatoria = 0;
 long tiempo = millis();
-int pin = 13;
+int pin = 7;
 int N = 0;
 unsigned long printPeriod = 1000; //Refresh rate
 unsigned long previousMillis = 0;
