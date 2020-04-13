@@ -1,51 +1,82 @@
+//----Librerias-------------------//
 #include <WiFiEspClient.h>
 #include <WiFiEsp.h>
 #include <WiFiEspUdp.h>
 #include "SoftwareSerial.h"
 #include <ThingsBoard.h>
-#define WIFI_AP "IER"
-#define WIFI_PASSWORD "acadier2014"
-#define TOKEN "asm8CrU6nQfGsW3Xl7Fn"
-char thingsboardServer[] = "iot.ier.unam.mx";
+#include "EmonLib.h" 
+//-------------------------------//
+
+#define VOLT_CAL 148.7
+EnergyMonitor emon1;
+
+//-----datos de la red-------//
+//#define WIFI_AP "IER"
+//#define WIFI_PASSWORD "acadier2014"
+#define WIFI_AP "INFINITUMjpdm"
+#define WIFI_PASSWORD "5cbbb04d21"
+
+#define TOKEN "asm8CrU6nQfGsW3Xl7Fn"  //--------Dispositivo tb-------//  
+
+char thingsboardServer[] = "iot.ier.unam.mx"; //------Servidor ThingsBoard--------//
+
 // Initialize the Ethernet client object
-WiFiEspClient espClient;
-ThingsBoard tb(espClient);
-SoftwareSerial soft(2, 3); // RX, TX
+WiFiEspClient espClient;                                     
+ThingsBoard tb(espClient);                                    
+
+SoftwareSerial soft(2, 3); // RX, TX                          
 int status = WL_IDLE_STATUS;
 unsigned long lastSend;
+
 #include <Filters.h> //Easy library to do the calculations
 #include <Wire.h>
-float testFrequency = 60; // test signal frequency (Hz)
-float windowLength = 40.0 / testFrequency; // how long to average the signal, for statistist
-int Sensor = 0; //Sensor analog input, here it's A0
+
+float testFrequency = 60; // Frecuencia (Hz)
+float windowLength = 40.0 / testFrequency; // promedio de la señal
+
+int SensorVolts = 0; //Variable para la lectura del sensor de voltaje
+
+//----------constantes para funcion getvoltage-----------------------------//
 float intercept = -0.04; // to be adjusted based on calibration testing
 float slope = 0.0405; // to be adjusted based on calibration testing
-float current_Volts; // Voltage
-float voltajeSensor;
+float voltaje; // Voltaje real
+
+unsigned long periodo = 1000; //Refresh rate
+unsigned long tiempoAnterior = 0;
+//-----------------------------------------------------------------------//
+
+float Sensordecorriente;
 float corriente = 0;
 float Sumatoria = 0;
 long tiempo = millis();
 int pin = 7;
 int N = 0;
-unsigned long printPeriod = 1000; //Refresh rate
-unsigned long previousMillis = 0;
+
+//----constantes para funcion getpower-----------------------------------------------------------------//
 float rads = 57.29577951; // 1 radian = aprox. 57 grados
 float degree = 360;
 float frequency = 60;
 float nano = 1 * pow (10, -6); // Factor de multiplicación para convertir nano segundos en segundos
-// Definir flotantes para contener cálculos
+
 float pf;
 float angle;
 float pf_max = 0;
 float angle_max = 0;
 int ctr;
-// Definir flotantes para contener cálculos
-void setup() { // initialize serial for debugging
+//----------------------------------------------------------------------------------------------------//
+
+//------------------------------------------------------------//
+void setup() { 
+  // initialize serial for debugging
   Serial.begin(9600);
-  InitWiFi();
-  lastSend = 0;
+  InitWiFi();                         
+  lastSend = 0;                        
   pinMode(pin, INPUT);
+  emon1.voltage(1, VOLT_CAL, 1.7);  // Voltage: input pin, calibration, phase_shift
 }
+//------------------------------------------------------------//
+
+//-------------------------------------------------------------//
 void loop() {
   status = WiFi.status();
   if ( status != WL_CONNECTED) {
@@ -62,57 +93,64 @@ void loop() {
     reconnect();
   }
   if ( millis() - lastSend > 1000 ) { // Update and send only after 1 seconds
-    getcorriente();
-    getvoltaje();
-    getpower();
+
+    
+    float Irms = getcorriente();
+    float volts = getvoltaje();
+    float pf = getpower();
+
+
+    //Serial.println("Sending data to ThingsBoard:"); 
+    Serial.print("voltaje --> ");
+    Serial.println(volts);
+    Serial.print("corriente --> "); 
+    Serial.println(Irms);
+    Serial.print("factor_p --> ");
+    Serial.println(pf);
+    tb.sendTelemetryFloat("voltaje", volts);
+    tb.sendTelemetryFloat("corriente", Irms);
+    tb.sendTelemetryFloat("factor_p", pf);
+    
     lastSend = millis();
   }
   tb.loop();
 }
-//potencia
-void getvoltaje()
+//..........................................................//
+
+
+//-------------------------------------------------------------------------------------------------------//
+float getvoltaje()
 {
-  Serial.println("Collecting energy data.");
-  RunningStatistics inputStats; //Easy life lines, actual calculation of the RMS requires a load of coding
-  inputStats.setWindowSecs( windowLength );
-  float Irms = getcorriente();
-  float pf = getpower();
-  Sensor = analogRead(A1); // read the analog in value:
-  inputStats.input(Sensor); // log to Stats function
-  if ((unsigned long)(millis() - previousMillis) >= printPeriod) {
-    previousMillis = millis(); // update time every second
-    current_Volts = intercept + slope * inputStats.sigma(); //Calibartions for offset and amplitude
-    current_Volts = current_Volts; //Further calibrations for the amplitude
-  }
-  if (isnan(current_Volts)) {
-    Serial.println("Failed to read from sensor!");
-    return;
-  }
-  Serial.println("Sending data to ThingsBoard:"); Serial.print("voltaje");
-  Serial.println(" corriente "); Serial.println(Irms);
-  tb.sendTelemetryFloat("voltaje", current_Volts);
-  tb.sendTelemetryFloat("corriente", Irms);
-  tb.sendTelemetryFloat("factor_p", pf);
+  emon1.calcVI(20,2000);
+  float supplyVoltage = emon1.Vrms;
+  return supplyVoltage; 
 }
+//-------------------------------------------------------------------------------------------//
+
+//----------------------------------------------------------------------------------------------------//
 float getcorriente()
 {
-  float voltajeSensor;
+  float Sensordecorriente;
   float corriente = 0;
   float Sumatoria = 0;
   long tiempo = millis();
   int N = 0;
   while (millis() - tiempo < 500) //Duración 0.5 segundos(Aprox. 30 ciclos de 60Hz)
   {
-    voltajeSensor = analogRead(A3) * (1.1 / 1023.0); //voltaje del sensor de corriente alterna
-    corriente = voltajeSensor; //corriente=VoltajeSensor*(100A/1V)
+    Sensordecorriente = analogRead(A3) * (1.0 / 1023.0); //voltaje del sensor de corriente alterna
+    corriente = Sensordecorriente; //corriente=VoltajeSensor*(100A/1V)
     Sumatoria = Sumatoria + sq(corriente); //Sumatoria de Cuadrados
     N = N + 1;
     delay(1);
   }
-  Sumatoria = Sumatoria * 2; //Para compensar los cuadrados de los semiciclos negativos.
+  //Sumatoria = Sumatoria * 2; //Para compensar los cuadrados de los semiciclos negativos.
   corriente = sqrt((Sumatoria) / N); //Ecuación del RMS corriente=corriente;
-  return;
+  
+  return corriente;
 }
+//-----------------------------------------------------------------------------------------------------//
+
+//-----------------------------------------------------------------------------------------------------//
 float getpower()
 { for (ctr = 0; ctr <= 4; ctr++) // Realice 4 mediciones y luego reinicie
   {
@@ -137,8 +175,12 @@ float getpower()
     pf_max = 0; // Asigna el Unity PF a "pf_max"
   }
   pf_max = pf_max;
-  return;
+
+  return pf_max;
 }
+//---------------------------------------------------------------------------------------------------------//
+
+//-------------------------------------------------------------------------------------------------------------//
 void InitWiFi()
 {
   // initialize serial for ESP module
@@ -162,6 +204,9 @@ void InitWiFi()
   }
   Serial.println("Connected to AP");
 }
+//---------------------------------------------------------------------------------------------------------------//
+
+//---------------------------------------------------------------------------------------------------------------//
 void reconnect() {
   // Loop until we're reconnected
   while (!tb.connected()) {
@@ -177,3 +222,4 @@ void reconnect() {
     }
   }
 }
+//-------------------------------------------------------------------------------------------------------------------//
