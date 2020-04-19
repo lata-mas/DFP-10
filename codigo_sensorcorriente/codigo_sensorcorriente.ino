@@ -1,14 +1,12 @@
 //----Librerias-------------------//
-#include <WiFiEspClient.h>
+//#include <WiFiEspClient.h>
 #include <WiFiEsp.h>
-#include <WiFiEspUdp.h>
+//#include <WiFiEspUdp.h>
 #include "SoftwareSerial.h"
-#include <ThingsBoard.h>
-#include "EmonLib.h" 
+#include <ThingsBoard.h> 
+#include <Wire.h>
+#include "factores.h"
 //-------------------------------//
-
-#define VOLT_CAL 148.7
-EnergyMonitor emon1;
 
 //-----datos de la red-------//
 //#define WIFI_AP "IER"
@@ -17,7 +15,6 @@ EnergyMonitor emon1;
 #define WIFI_PASSWORD "5cbbb04d21"
 
 #define TOKEN "asm8CrU6nQfGsW3Xl7Fn"  //--------Dispositivo tb-------//  
-
 char thingsboardServer[] = "iot.ier.unam.mx"; //------Servidor ThingsBoard--------//
 
 // Initialize the Ethernet client object
@@ -26,90 +23,34 @@ ThingsBoard tb(espClient);
 
 SoftwareSerial soft(2, 3); // RX, TX                          
 int status = WL_IDLE_STATUS;
-unsigned long lastSend;
+unsigned long lastSend = 0;
 
-#include <Filters.h> //Easy library to do the calculations
-#include <Wire.h>
 
-float testFrequency = 60; // Frecuencia (Hz)
-float windowLength = 40.0 / testFrequency; // promedio de la señal
+int pinpf = 7;
+int pinvolts = 1;
+int pincorriente = 3;
 
-int SensorVolts = 0; //Variable para la lectura del sensor de voltaje
-
-//----------constantes para funcion getvoltage-----------------------------//
-float intercept = -0.04; // to be adjusted based on calibration testing
-float slope = 0.0405; // to be adjusted based on calibration testing
-float voltaje; // Voltaje real
-
-unsigned long periodo = 1000; //Refresh rate
-unsigned long tiempoAnterior = 0;
-//-----------------------------------------------------------------------//
-
-float Sensordecorriente;
-float corriente = 0;
-float Sumatoria = 0;
-long tiempo = millis();
-int pin = 7;
-int N = 0;
-
-//----constantes para funcion getpower-----------------------------------------------------------------//
-float rads = 57.29577951; // 1 radian = aprox. 57 grados
-float degree = 360;
-float frequency = 60;
-float nano = 1 * pow (10, -6); // Factor de multiplicación para convertir nano segundos en segundos
-
-float pf;
-float angle;
-float pf_max = 0;
-float angle_max = 0;
-int ctr;
-//----------------------------------------------------------------------------------------------------//
+factores fact;
 
 //------------------------------------------------------------//
 void setup() { 
   // initialize serial for debugging
   Serial.begin(9600);
-  InitWiFi();                         
-  lastSend = 0;                        
-  pinMode(pin, INPUT);
-  emon1.voltage(1, VOLT_CAL, 1.7);  // Voltage: input pin, calibration, phase_shift
+  InitWiFi();                                                
+  fact.defvar(pinvolts, pinpf, pincorriente);
 }
 //------------------------------------------------------------//
 
 //-------------------------------------------------------------//
 void loop() {
-  status = WiFi.status();
-  if ( status != WL_CONNECTED) {
-    while ( status != WL_CONNECTED) {
-      Serial.print("Attempting to connect to WPA SSID: ");
-      Serial.println(WIFI_AP);
-      // Connect to WPA/WPA2 network
-      status = WiFi.begin(WIFI_AP, WIFI_PASSWORD);
-      delay(500);
-    }
-    Serial.println("Connected to AP");
-  }
-  if ( !tb.connected() ) {
-    reconnect();
-  }
+  conectar();
   if ( millis() - lastSend > 1000 ) { // Update and send only after 1 seconds
 
+ fact.calcular();   
     
-    float Irms = getcorriente();
-    float volts = getvoltaje();
-    float pf = getpower();
-
-
-    //Serial.println("Sending data to ThingsBoard:"); 
-    Serial.print("voltaje --> ");
-    Serial.println(volts);
-    Serial.print("corriente --> "); 
-    Serial.println(Irms);
-    Serial.print("factor_p --> ");
-    Serial.println(pf);
-    tb.sendTelemetryFloat("voltaje", volts);
-    tb.sendTelemetryFloat("corriente", Irms);
-    tb.sendTelemetryFloat("factor_p", pf);
+   tb.sendTelemetryFloat("voltaje", fact.volts);
+    tb.sendTelemetryFloat("corriente", fact.Irms);
+    tb.sendTelemetryFloat("factor_p", fact.pf);
     
     lastSend = millis();
   }
@@ -117,68 +58,6 @@ void loop() {
 }
 //..........................................................//
 
-
-//-------------------------------------------------------------------------------------------------------//
-float getvoltaje()
-{
-  emon1.calcVI(20,2000);
-  float supplyVoltage = emon1.Vrms;
-  return supplyVoltage; 
-}
-//-------------------------------------------------------------------------------------------//
-
-//----------------------------------------------------------------------------------------------------//
-float getcorriente()
-{
-  float Sensordecorriente;
-  float corriente = 0;
-  float Sumatoria = 0;
-  long tiempo = millis();
-  int N = 0;
-  while (millis() - tiempo < 500) //Duración 0.5 segundos(Aprox. 30 ciclos de 60Hz)
-  {
-    Sensordecorriente = analogRead(A3) * (1.0 / 1023.0); //voltaje del sensor de corriente alterna
-    corriente = Sensordecorriente; //corriente=VoltajeSensor*(100A/1V)
-    Sumatoria = Sumatoria + sq(corriente); //Sumatoria de Cuadrados
-    N = N + 1;
-    delay(1);
-  }
-  //Sumatoria = Sumatoria * 2; //Para compensar los cuadrados de los semiciclos negativos.
-  corriente = sqrt((Sumatoria) / N); //Ecuación del RMS corriente=corriente;
-  
-  return corriente;
-}
-//-----------------------------------------------------------------------------------------------------//
-
-//-----------------------------------------------------------------------------------------------------//
-float getpower()
-{ for (ctr = 0; ctr <= 4; ctr++) // Realice 4 mediciones y luego reinicie
-  {
-    // 1ª línea calcula el ángulo de fase en grados a partir del impulso de tiempo diferenciado
-    // La función COS usa radianes no grados. Por lo tanto, la conversión se realizó dividiendo el ángulo / 57.2958
-    angle = ((((pulseIn(pin, HIGH)) * nano) * degree) * frequency);
-    pf = cos (angle / rads);
-    if (angle > angle_max) // Probar si el ángulo es el ángulo máximo
-    {
-      angle_max = angle; // Si el registro máximo en la variable "angle_max"
-      pf_max = cos(angle_max / rads); // Calc PF de "angle_max"
-    }
-  }
-  if (angle_max > 360) // Si el cálculo es mayor que 360, haga lo siguiente
-  {
-    angle_max = 0; // asigna el 0 a "angle_max"
-    pf_max = 1; // Asigna el Unity PF a "pf_max"
-  }
-  if (angle_max == 0) // Si el cálculo es más alto que 360, haga lo siguiente
-  {
-    angle_max = 1; // asigna el 0 a "angle_max"
-    pf_max = 0; // Asigna el Unity PF a "pf_max"
-  }
-  pf_max = pf_max;
-
-  return pf_max;
-}
-//---------------------------------------------------------------------------------------------------------//
 
 //-------------------------------------------------------------------------------------------------------------//
 void InitWiFi()
@@ -222,4 +101,21 @@ void reconnect() {
     }
   }
 }
+
+ void conectar() {
+  status = WiFi.status();
+  if ( status != WL_CONNECTED) {
+    while ( status != WL_CONNECTED) {
+      Serial.print("Attempting to connect to WPA SSID: ");
+      Serial.println(WIFI_AP);
+      // Connect to WPA/WPA2 network
+      status = WiFi.begin(WIFI_AP, WIFI_PASSWORD);
+      delay(500);
+    }
+    Serial.println("Connected to AP");
+  }
+  if ( !tb.connected() ) {
+    reconnect();
+  }
+  }
 //-------------------------------------------------------------------------------------------------------------------//
