@@ -99,7 +99,7 @@ int ctr;
 //---------------------------------------------------------------------------------------------------------//
 
 //------------------calcular-------------------
-void calcular() {
+float calcular() {
     float Irms = getcorriente();
     float volts = getvoltaje();
     float pf = getpower();
