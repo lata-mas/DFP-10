@@ -1,7 +1,7 @@
-# SensorH2O
-Repositorio para el proyecto de los sensores de flujo de agua para el nuevo edificio del IER-UNAM.
+# Dispositivo Factor de potencia
+Repositorio para el proyecto de medición del factor de potencia eléctrica para el nuevo edificio del IER-UNAM.
 
-Esta versión del proyecto se conforma de un código modular para facilitar la manipulación de ciertos parámetros que nos ayuden a monitorear el flujo de agua en una tubería o si se requiere hasta 8 tuberías.
+Esta versión del proyecto se conforma de un código modular para facilitar la manipulación de ciertos parámetros que nos ayuden a monitorear el consumo de energía eléctrica en los diferentes circuitos eléctricos del edificio nuevo del IER-UNAM.
 
 
 A continuación se explican cada una de las funciones definidas en el archivo "funciones.py"
