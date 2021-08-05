@@ -178,6 +178,69 @@ Representación gráfica del dispositivo Factor de potencia (**Falta**)
 
 La etapa en la que se encuentra el desarrollo del dispositivo Factor de potencia, es la de documentación y primeras pruebas.
 
+## Seguimiento de actividades del dispositivo Factor de potencia
+
+|**Actividad**|**Tiempo estimado de ejecución**|**% de avance**|**Pendientes**|**Notas**   |
+| :------------: | :------------: | :------------: | :------------: | :------------: |
+|**1.**| |   |   |   |
+|   |   |   |   |   |
+|**2.**|   |   |   |   |
+|   |   |   |   |   |
+|**3.**|   |   |   |   |
+|   |   |   |   |   |
+|**4.**|   |   |   |   |
+|   |   |   |   |   |
+|**5.**|   |   |   |   |
+|   |   |   |   |   |
+|**6.**|   |   |   |   |
+|   |   |   |   |   |
+|**7.**|   |   |   |   |
+|   |   |   |   |   |
+|**8.**|   |   |   |   |
+|   |   |   |   |   |
+|**9.**|   |   |   |   |
+|   |   |   |   |   |
+|**10.**|   |   |   |   |
+|   |   |   |   |   |
+|**11.**|   |   |   |   |
+|   |   |   |   |   |
+|**12.**|   |   |   |   |
+|   |   |   |   |   |
+|**13.**|   |   |   |   |
+|   |   |   |   |   |
+|**14.**|   |   |   |   |
+|   |   |   |   |   |
+|**15.**|   |   |   |   |
+|   |   |   |   |   |
+|**16.**|   |   |   |   |
+|   |   |   |   |   |
+|**17.**|   |   |   |   |
+|   |   |   |   |   |
+|**18.**|   |   |   |   |
+|   |   |   |   |   |
+|**19.**|   |   |   |   |
+|   |   |   |   |   |
+|**20.**|   |   |   |   |
+|   |   |   |   |   |
+
+------------
+
+## CHECK-LIST de lo que debe tener el dispositivo
+- [ ] Lista de costos
+- [ ] SRC completos
+- [ ] Pictograma de conexión
+- [ ] Esquemático de conexión
+- [ ] Archivos de diseño PCB
+- [ ] Archivos gerber para el maquinado del PCB
+- [ ] Lista de materiales
+- [ ] Planos CAD
+- [ ] Archivos de diseño CAD
+- [ ] Archivos STL para impresión 3D
+- [ ] Manual de operación
+- [ ] Manual de ensamble
+- [ ] Fichas técnicas o datasheet de los módulos, sensores y componentes usados
+- [ ] Documento de errores, soluciones y recomendaciones
+
 ### 4.5.9 Fue hecho físicamente
 
 El dispositivo aún no se ha hecho de forma práctica en su totalidad, es decir, no se ha llevado a la práctica para comprobar el funcionamiento del dispostivo completo con todos sus componentes.
