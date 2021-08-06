@@ -12,7 +12,7 @@ Con lo anterior y compartiendo la idea de utilizar mas las energías limpias, se
 
 |Nombre|Instituto/Organización|Email|
 | ------------ | ------------ | ------------ |
-|Falta |Falta |Falta |
+|Juan Valle Bahena|ITZ|juanvb999@gmail.com|
 |Falta |Falta|Falta|
 |Guillermo Barrios del Valle|IER-UNAM|gbv@ier.unam.mx|
 |Guillermo Ramírez Zúñiga|IER-UNAM|guraz@ier.unam.mx|
@@ -147,11 +147,11 @@ Son recomendaciones para operar el dispositivo(falta complementar)
 
 ### 4.5.7 Colaboradores
 
-**Nombre:** 
+**Nombre: Juan Valle Bahena** 
 
-**Instituto:**
+**Instituto: Instituto Tecnológico de Zacatepec (ITZ)**
 
-**Email:**
+**Email: juanvb999@gmail.com**
 
 
 
