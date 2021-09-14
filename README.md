@@ -184,39 +184,27 @@ La etapa en la que se encuentra el desarrollo del dispositivo Factor de potencia
 
 |**Actividad**|**Tiempo estimado de ejecución**|**Referenciación**|
 | :------------: | :------------: | :------------: |
-|**1. Revisión de documentos existentes necesarios para operarlo de acuerdo a la CHECK-LIST**|2 h|[**°Documentación**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/Documentacion) [**°Check-List**]()|
+|**1. Revisión de documentos existentes necesarios para operarlo de acuerdo a la CHECK-LIST**|2 h|[**°Documentación**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/Documentacion) [**°Check-List**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/blob/master/Materiales/Check-ListFP.md)|
 |   |   |   |
-|**2. Verificar si cuenta con los materiales requeridos**|1/2 h|[**Materiales**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/blob/master/Materiales/Lista_materiales_y_costos.md)|
+|**2. Verificar si cuenta con los materiales requeridos**|1/2 h|[**Materiales**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/blob/master/Materiales/Material.txt)|
 |   |   |   |
-|**3. Imprimir la carcasa en 3D (4 PARTES)**|34 h|[**Archivos STL**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/CAD)|
+|**3. Imprimir la carcasa en 3D (2 PARTES)**|32h h|[**Archivos STL**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/CAD)|
 |   |   |   |
-|**4. Leer el manual de operación para entender lo que se hará**|1 h|[**Manual**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/blob/master/Manuales/ManualTHIS.md)|
+|**4. Leer los reportes de residencia para entender lo que se hará**|1 h|[**Documentación**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/Documentacion)|
 |   |   |   |
-|**5. Entender los diagramas de conexión**|1/2 h|[**Diagramas**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/Diagramas)|
+|**5. Entender los diagramas de conexión**|1/2 h|[**Diagramas**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/Diagramas)|
 |   |   |   |
-|**6. Descargar e instalar Raspbian en la Raspberry**|3 h|[**Proceso**](https://youtu.be/JOzr38A48q8)|
-|   |   |   |
-|**6. Conectar la Raspberry al monitor con los módulos y configurar de acuerdo al manual de operación**|1 h|[**Esquemático**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/blob/master/Diagramas/ESQUEM%C3%81TICO-THIS.pdf)|
-|   |   |   |
-|**7. Descargar e instalar el código de sonido**|1/2 h|[**Código sonido**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/SRC/SRC_independientes/Soundmeter)|
-|   |   |   |
-|**8. Descargar e instalar el código de iluminaión**|1/2 h|[**Código iluminación**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/SRC/SRC_independientes/Ilumination)|
-|   |   |   |
-|**9. Descargar e instalar el código de temperatura y humedad**|1/2 h|[**Código temperatura y humedad**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/SRC/SRC_independientes/TempAndHumi)|
-|   |   |   |
-|**Asegurarse de que funcionan los códigos independientes**|   |   |
-|   |   |   |
-|**10. Descargar e instalar el código completo (son 5 .py)**|1/2 h|[**Código THIS**](https://github.com/Dispositivos-Edificio-Bioclimatico/DTHIS/tree/master/SRC)|
+|**6. Descargar el código y cargar en el IDE de Arduino**|1/2 h|[**Código de FP**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/SRC/codigo_sensorcorriente)|
 |   |   |   |
 |**Ejecutar el código como primera prueba y asegurarse que funciona**|   |   |
 |   |   |   |
-|**11. Verificar si envía datos de telemetría correctamente a Thingsboard**|1/2 h|[**°Rasp_Oliver**](http://iot.ier.unam.mx:8080/devices)  [**°Dashboard**](http://iot.ier.unam.mx:8080/dashboard/347b6380-c9c6-11e9-b63c-1566f7f95663?publicId=0e7066c0-6e70-11e8-b1f3-991d62d050bd)|
+|**7. Verificar si envía datos de telemetría correctamente a Thingsboard**|1/2 h|[**JUAN_VALLE_ENERGÍA**](http://iot.ier.unam.mx:8080/dashboards/a7021b60-13df-11eb-9c3f-d1ead9980bc3)  [**°Dashboard**](http://iot.ier.unam.mx:8080/devices)|
 |   |   |   |
-|**10. Montar el dispositivo en el lugar requerido**|1h|   |
+|**8. Montar el dispositivo en el lugar requerido**|1h|   |
 |   |   |   |
-|**10. Dejarlo operando durante 48 horas como prueba "Burn it"**|48h|   |
+|**9. Dejarlo operando durante 48 horas como prueba "Burn it"**|48h|   |
 |   |   |   |
-|**Tiempo total apróximado:**|**5 días**|Dependerá de la habilidad y conocimientos que se tengan, puede llevar menos tiempo o más|
+|**Tiempo total apróximado:**|**3 días**|Dependerá de la habilidad y conocimientos que se tengan, puede llevar menos tiempo o más|
 
 ------------
 
