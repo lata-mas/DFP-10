@@ -1,0 +1,14 @@
+- [x] Lista de costos
+- [x] SRC completos
+- [x] Pictograma de conexión
+- [x] Esquemático de conexión
+- [x] Archivos de diseño PCB
+- [x] Archivos gerber para el maquinado del PCB
+- [x] Lista de materiales
+- [x] Planos CAD
+- [x] Archivos de diseño CAD
+- [x] Archivos STL para impresión 3D
+- [ ] Manual de operación
+- [ ] Manual de ensamble
+- [x] Fichas técnicas o datasheet de los módulos, sensores y componentes usados
+- [ ] Documento de errores, soluciones y recomendaciones
