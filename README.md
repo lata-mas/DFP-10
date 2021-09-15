@@ -188,7 +188,7 @@ La etapa en la que se encuentra el desarrollo del dispositivo Factor de potencia
 |   |   |   |
 |**2. Verificar si cuenta con los materiales requeridos**|1/2 h|[**Materiales**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/blob/master/Materiales/Material.txt)|
 |   |   |   |
-|**3. Imprimir la carcasa en 3D (2 PARTES)**|32h h|[**Archivos STL**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/CAD)|
+|**3. Imprimir la carcasa en 3D (2 PARTES)**|32 h|[**Archivos STL**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/CAD)|
 |   |   |   |
 |**4. Leer los reportes de residencia para entender lo que se hará**|1 h|[**Documentación**](https://github.com/Dispositivos-Edificio-Bioclimatico/FactorDePotencia/tree/master/Documentacion)|
 |   |   |   |
@@ -280,6 +280,13 @@ En esta carpeta deberán ponerse todos los códigos necesarios para operar el di
 
 Aquí debe ir información del dispositivo para visualizar datos en la plataforma IOT Thingsboard, credenciales, dashboard, nombre del dispositivo en la plataforma y todo lo que tenga que ver con la comunicación del dispositivo y Thingsboard.
 
+Dispositivo:
+[**JUAN_VALLE_ENERGÍA**](http://iot.ier.unam.mx:8080/devices)
+
+Dashboard:
+[**JUAN_VALLE_ENERGÍA**](http://iot.ier.unam.mx:8080/dashboards/a7021b60-13df-11eb-9c3f-d1ead9980bc3)
+
+**Las credenciales para acceder a Thinsgboard deberán ser solicitadas a los doctores**
 ------------
 
 # 5.0 Bibliografía
