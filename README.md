@@ -278,8 +278,6 @@ En esta carpeta deberán ponerse todos los códigos necesarios para operar el di
 
 ### Thingsboard
 
-Aquí debe ir información del dispositivo para visualizar datos en la plataforma IOT Thingsboard, credenciales, dashboard, nombre del dispositivo en la plataforma y todo lo que tenga que ver con la comunicación del dispositivo y Thingsboard.
-
 Dispositivo:
 [**JUAN_VALLE_ENERGÍA**](http://iot.ier.unam.mx:8080/devices)
 
