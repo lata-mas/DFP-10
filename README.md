@@ -10,6 +10,8 @@ A continuación se muestra el esquema general del dispositivo y una descripcció
 
 ![](https://github.com/Dispositivos-Edificio-Bioclimatico/DFP-10/blob/master/Imagenes/Esquema_general.png?raw=true)
 
+[Diagrama electrico](https://github.com/Dispositivos-Edificio-Bioclimatico/DFP-10/blob/master/Diagramas/circuito_acondicionamiento.png?raw=true)
+
 **Corriente**
 
 Sensor propuesto: SCT-013-030
