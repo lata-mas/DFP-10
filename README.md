@@ -93,4 +93,7 @@ Dashboard:
 **Las credenciales para acceder a Thinsgboard deberán ser solicitadas a los doctores**
 ------------
 
+## PENDIENTES
+Probar el sensor de corriente Hall Split core HSTS016L para verificar el calculo correcto del Factor de Potencia (FP).
+
 
