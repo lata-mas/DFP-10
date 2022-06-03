@@ -94,6 +94,7 @@ Dashboard:
 ------------
 
 ## PENDIENTES
-- Probar el sensor de corriente Hall Split core HSTS016L para verificar el calculo correcto del Factor de Potencia (FP).
+- comprar el sensor de corriente Hall Split core HSTS016L.
+- Hacer pruebas  para verificar el calculo correcto del Factor de Potencia (FP).
 
 
