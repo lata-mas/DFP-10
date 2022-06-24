@@ -107,6 +107,6 @@ Dashboard:
       
       * Será de ayuda usar un osciloscopio, para verificar que los circuitos integrados LM324N Y CD4030BE esten procesando la señal correctamente.
       
-2.- **IMPORTANTE** - **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la salud o incluso la vida**
+2.- **IMPORTANTE** - **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la vida**
 
 
