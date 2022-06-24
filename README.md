@@ -94,7 +94,12 @@ Dashboard:
 ------------
 
 ## PENDIENTES
-- comprar el sensor de corriente Hall Split core HSTS016L.
-- Hacer pruebas  para verificar el calculo correcto del Factor de Potencia (FP).
+1.- Comprar el sensor de corriente Hall Split core HSTS016L y hacer pruebas para verificar que el Factor de Potencia (FP) sea correcto.
+2.- Poner una carcasa al dispositivo como proteccion para el sistema.
+3.- Instalar el dispositivo en un edificio para probar la medición de las 10 lineas.
+
+## RECOMENDACIONES
+1.- Usar un osciloscopio, para verificar que las señales sean correctas.
+2.- **IMPORTANTE** **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la salud o incluso la vida**
 
 
