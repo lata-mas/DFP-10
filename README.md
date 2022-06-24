@@ -103,6 +103,6 @@ Dashboard:
 ## RECOMENDACIONES
 1.- Usar un osciloscopio, para verificar que las señales sean correctas.
 
-2.- **IMPORTANTE** **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la salud o incluso la vida**
+2.- IMPORTANTE - **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la salud o incluso la vida**
 
 
