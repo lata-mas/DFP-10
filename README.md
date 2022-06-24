@@ -108,6 +108,6 @@ Dashboard:
       * Será de ayuda usar un osciloscopio, para verificar que los circuitos integrados LM324N Y CD4030BE esten procesando la señal correctamente.
 2.- Si el modulo ESP-01 (wifi) no logra inicializar se resuelve cambiando la velocidad de comunicación serial del modulo, en soft.begin (9600 o 115200).
       
-3.- **IMPORTANTE** - **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la vida**
+3.- **IMPORTANTE** - **Extremar precauciones a la hora de hacer pruebas, ya que se trabaja con un voltaje que puede poner en riesgo la vida.**
 
 
