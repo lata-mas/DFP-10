@@ -1,5 +1,8 @@
 # Dispositivo Factor de potencia
 
+Este dispositivo se realizó gracias al apoyo del proyecto UNAM-PAPIIT IT103023.
+
+
 El dispositivo FP-10 es un monitor de energía electrica desarrollado para medir parametros que permitan llevar un seguimiento del consumo energetico de un lugar, puesto que los datos obtenidos son enviados a una plataforma de internet para su visualizacion del tiempo de medición transcurrido. El dispositivo mide las siguientes variables: voltaje, corriente y factor de potencia. El monitor esta diseñado  para ser usado en una instalación trifásica y capaz de medir hasta 10 lineas.
 
 A continuación se muestra el esquema general del dispositivo y una descripcción breve de los parametros que mide:
